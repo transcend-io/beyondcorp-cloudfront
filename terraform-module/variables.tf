@@ -33,3 +33,8 @@ variable scopes {
   type        = list(string)
   description = "The scopes to attempt to log in with"
 }
+
+variable ssm_client_secret_param_name {
+  description = "The name of the SSM param for the client secret"
+  default = "COGNITO_CLIENT_SECRET"
+}
