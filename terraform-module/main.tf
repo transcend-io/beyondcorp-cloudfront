@@ -1,6 +1,9 @@
 module "lambda-at-edge" {
   source  = "transcend-io/lambda-at-edge/aws"
-  version = "0.0.1"
+  version = "0.0.2"
+
+  name        = var.name
+  description = var.description
 
   lambda_code_source_dir = "${path.module}/../src"
   file_globs = [
@@ -23,7 +26,4 @@ module "lambda-at-edge" {
   ssm_params = {
     COGNITO_CLIENT_SECRET = var.client_secret
   }
-
-  # All Lambda@Edge functions must be in us-east-1 (Virginia)
-  region      = "us-east-1"
 }

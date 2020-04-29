@@ -1,11 +1,11 @@
 variable name {
   description = "The name of the lambda@edge function"
-  default = "cognito_auth"
+  default     = "cognito_auth"
 }
 
 variable description {
   description = "The description of the lambda@edge function"
-  default = "Enforces JWT authentication through AWS Cognito"
+  default     = "Enforces JWT authentication through AWS Cognito"
 }
 
 variable userpool_id {
@@ -22,7 +22,7 @@ variable client_secret {
 
 variable userpool_region {
   description = "The region of the Cognito User Pool"
-  default = "eu-west-1"
+  default     = "eu-west-1"
 }
 
 variable ui_subdomain {
@@ -30,6 +30,6 @@ variable ui_subdomain {
 }
 
 variable scopes {
-  type = list(string)
+  type        = list(string)
   description = "The scopes to attempt to log in with"
 }
