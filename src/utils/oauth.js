@@ -1,7 +1,7 @@
 const axios = require('axios').default;
 const { stringify } = require('querystring');
 
-const { AUTH_DOMAIN, CLIENT_ID, fetchSsmParam } = require('./config');
+const { AUTH_DOMAIN, CLIENT_ID, CLIENT_SECRET_PARAM_NAME, fetchSsmParam } = require('./config');
 
 /**
  * Exchanges an authorization code for a JWT using the oauth server.
@@ -30,7 +30,7 @@ async function exchangeCodeForToken(code, redirectUri, pkce) {
     headers,
     auth: {
       username: CLIENT_ID,
-      password: await fetchSsmParam('COGNITO_CLIENT_SECRET'),
+      password: await fetchSsmParam(CLIENT_SECRET_PARAM_NAME),
     },
   });
 

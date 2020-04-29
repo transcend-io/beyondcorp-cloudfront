@@ -27,6 +27,7 @@ async function fetchSsmParam(name) {
 exports.fetchSsmParam = fetchSsmParam;
 exports.USERPOOL_ID = config.userpool_id;
 exports.CLIENT_ID = config.client_id;
+exports.CLIENT_SECRET_PARAM_NAME = config.client_secret_param_name;
 exports.REGION = config.userpool_region;
 exports.UI_SUBDOMAIN = config.ui_subdomain;
 exports.SCOPES = config.scopes;
