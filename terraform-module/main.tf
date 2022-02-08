@@ -5,6 +5,8 @@ module "lambda-at-edge" {
   name        = var.name
   description = var.description
 
+  s3_artifact_bucket = var.s3_artifact_bucket
+
   lambda_code_source_dir = "${path.module}/../src"
   file_globs = [
     "index.js",
