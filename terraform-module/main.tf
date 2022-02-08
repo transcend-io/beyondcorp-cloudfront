@@ -1,6 +1,6 @@
 module "lambda-at-edge" {
   source  = "transcend-io/lambda-at-edge/aws"
-  version = "0.0.4"
+  version = "0.4.0"
 
   name        = var.name
   description = var.description
