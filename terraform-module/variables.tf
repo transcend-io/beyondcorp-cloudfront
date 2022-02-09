@@ -38,3 +38,5 @@ variable ssm_client_secret_param_name {
   description = "The name of the SSM param for the client secret"
   default = "COGNITO_CLIENT_SECRET"
 }
+
+variable "s3_artifact_bucket" {}
