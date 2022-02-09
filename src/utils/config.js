@@ -1,12 +1,12 @@
-const { SSM } = require('aws-sdk');
+const { SSM } = require("aws-sdk");
 
-const { readFileSync } = require('fs');
+const { readFileSync } = require("fs");
 
 // All Lambda@Edge functions must reside in us-east-1.
-const ssmClient = new SSM({ region: 'us-east-1' });
+const ssmClient = new SSM({ region: "us-east-1" });
 
 // Executing this at the top level caches the config between lambda runs on the same server
-const config = JSON.parse(readFileSync('./config.json'));
+const config = JSON.parse(readFileSync("./config.json"));
 
 /**
  * Fetches a decrypted parameter from AWS SSM Parameter Store

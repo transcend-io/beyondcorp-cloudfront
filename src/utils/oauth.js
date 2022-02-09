@@ -1,7 +1,12 @@
-const axios = require('axios').default;
-const { stringify } = require('querystring');
+const axios = require("axios").default;
+const { stringify } = require("querystring");
 
-const { AUTH_DOMAIN, CLIENT_ID, CLIENT_SECRET_PARAM_NAME, fetchSsmParam } = require('./config');
+const {
+  AUTH_DOMAIN,
+  CLIENT_ID,
+  CLIENT_SECRET_PARAM_NAME,
+  fetchSsmParam,
+} = require("./config");
 
 /**
  * Exchanges an authorization code for a JWT using the oauth server.
@@ -15,11 +20,11 @@ async function exchangeCodeForToken(code, redirectUri, pkce) {
   const tokenExchangeUrl = `${authDomain}/oauth2/token`;
 
   const headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
+    "Content-Type": "application/x-www-form-urlencoded",
   };
 
   const params = stringify({
-    grant_type: 'authorization_code',
+    grant_type: "authorization_code",
     client_id: CLIENT_ID,
     redirect_uri: redirectUri,
     code,
@@ -30,17 +35,18 @@ async function exchangeCodeForToken(code, redirectUri, pkce) {
     headers,
     auth: {
       username: CLIENT_ID,
-      password: await fetchSsmParam(CLIENT_SECRET_PARAM_NAME),
+      password: CLIENT_SECRET_PARAM_NAME,
+      // password: await fetchSsmParam(CLIENT_SECRET_PARAM_NAME)
     },
   });
 
   if (!data) {
-    throw Error('Could not parse data from token exchange url');
+    throw Error("Could not parse data from token exchange url");
   }
 
   const { id_token, access_token, refresh_token } = data;
   if (!id_token || !access_token || !refresh_token) {
-    throw Error('Did not receive all expected tokens from token exchange url');
+    throw Error("Did not receive all expected tokens from token exchange url");
   }
 
   return { id_token, access_token, refresh_token };
