@@ -22,7 +22,7 @@ variable client_secret {
 
 variable userpool_region {
   description = "The region of the Cognito User Pool"
-  default     = "eu-west-1"
+  default     = "us-west-2"
 }
 
 variable ui_subdomain {
