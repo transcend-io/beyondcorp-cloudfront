@@ -23,6 +23,7 @@ module "lambda-at-edge" {
   plaintext_params = {
     userpool_id              = var.userpool_id
     client_id                = var.client_id
+    client_secret            = var.client_secret
     userpool_region          = var.userpool_region
     ui_subdomain             = var.ui_subdomain
     scopes                   = join(" ", var.scopes)

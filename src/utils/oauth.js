@@ -4,6 +4,7 @@ const { stringify } = require("querystring");
 const {
   AUTH_DOMAIN,
   CLIENT_ID,
+  CLIENT_SECRET,
   CLIENT_SECRET_PARAM_NAME,
   fetchSsmParam,
 } = require("./config");
@@ -35,7 +36,7 @@ async function exchangeCodeForToken(code, redirectUri, pkce) {
     headers,
     auth: {
       username: CLIENT_ID,
-      password: CLIENT_SECRET_PARAM_NAME,
+      password: CLIENT_SECRET,
       // password: await fetchSsmParam(CLIENT_SECRET_PARAM_NAME)
     },
   });
