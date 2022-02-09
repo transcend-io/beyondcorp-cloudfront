@@ -33,4 +33,4 @@ exports.REGION = config.userpool_region;
 exports.UI_SUBDOMAIN = config.ui_subdomain;
 exports.SCOPES = config.scopes;
 exports.ISSUER = `https://cognito-idp.${config.userpool_region}.amazonaws.com/${config.userpool_id}`;
-exports.AUTH_DOMAIN = `https://${config.ui_subdomain}.auth.${config.userpool_region}.amazoncognito.com`;
+exports.AUTH_DOMAIN = `https://${config.ui_subdomain}`;
