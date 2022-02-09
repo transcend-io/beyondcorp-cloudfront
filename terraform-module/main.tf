@@ -1,5 +1,6 @@
 module "lambda-at-edge" {
-  source  = "sketchy/lambda-at-edge/aws"
+  # source  = "sketchy/lambda-at-edge/aws"
+  source = "git::git@github.com:sketchy/terraform-aws-lambda-at-edge?ref=main"
   version = "0.4.0"
 
   name        = var.name
