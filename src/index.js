@@ -1,12 +1,12 @@
 // utils
-const { reject } = require('./utils/response');
-const { parseCookies } = require('./utils/cookies');
-const { parseQueryString, getReferer } = require('./utils/urls');
+const { reject } = require("./utils/response");
+const { parseCookies } = require("./utils/cookies");
+const { parseQueryString, getReferer } = require("./utils/urls");
 
 // handlers
-const { handleAuthorizationCodeRequest } = require('./handleAuthorizationCode');
-const { handleCookies } = require('./handleRequestWithCookies');
-const { handleNoAuth } = require('./handleNoAuth');
+const { handleAuthorizationCodeRequest } = require("./handleAuthorizationCode");
+const { handleCookies } = require("./handleRequestWithCookies");
+const { handleNoAuth } = require("./handleNoAuth");
 
 /**
  * Main function that runs on Viewer-Request CloudFront events.
@@ -41,10 +41,13 @@ exports.handler = async (event) => {
 
   // Parse the final destination the user wants to go to
   const origin = `https://${headers.host[0].value}`;
-  const querystring = request.querystring ? `?${request.querystring}` : '';
+  console.log({ origin });
+  const querystring = request.querystring ? `?${request.querystring}` : "";
   const finalDestinationUri = `${origin}${request.uri}${querystring}`;
+  console.log({ querystring, finalDestinationUri });
 
   const cookies = parseCookies(headers);
+  console.log({ cookies });
 
   // Handle the case where the current page is a redirect from the
   // Cognito login page with a query param for the authorization code set
@@ -56,11 +59,14 @@ exports.handler = async (event) => {
 
   // Handle the case where a cookie is set for the JWT
   if (cookies && cookies.transcend_internal_id_token) {
+    console.log(
+      `Handling cookies with cookies.transcend_internal_id_token:${cookies.transcend_internal_id_token}`
+    );
     return handleCookies(
       cookies.transcend_internal_id_token,
       origin,
       finalDestinationUri,
-      request,
+      request
     );
   }
 

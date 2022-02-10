@@ -1,10 +1,10 @@
 // utils
-const { exchangeCodeForToken } = require('./utils/oauth');
-const { reject, redirect } = require('./utils/response');
-const { logger } = require('./utils/logger');
+const { exchangeCodeForToken } = require("./utils/oauth");
+const { reject, redirect } = require("./utils/response");
+const { logger } = require("./utils/logger");
 
 // external
-const { decode } = require('urlsafe-base64');
+const { decode } = require("urlsafe-base64");
 
 /**
  * Parses state into it's stored values
@@ -14,12 +14,12 @@ const { decode } = require('urlsafe-base64');
  */
 function parseState(state) {
   const decoded = JSON.parse(
-    Buffer.from(decode(state), 'base64').toString('utf8'),
+    Buffer.from(decode(state), "base64").toString("utf8")
   );
 
   if (!decoded || !decoded.nonce || !decoded.requestedUri) {
     throw Error(
-      'Invalid state query parameter, did not contain expected values',
+      "Invalid state query parameter, did not contain expected values"
     );
   }
 
@@ -36,16 +36,16 @@ function parseState(state) {
 function validateNoncesMatch(state, cookies) {
   const { nonce } = parseState(state);
   if (!nonce) {
-    throw Error('Did not find nonce in query string state');
+    throw Error("Did not find nonce in query string state");
   }
 
   const { transcend_internal_nonce } = cookies;
   if (!transcend_internal_nonce) {
-    throw Error('Did not find nonce in cookie');
+    throw Error("Did not find nonce in cookie");
   }
 
   if (nonce !== transcend_internal_nonce) {
-    throw Error('nonces did not match');
+    throw Error("nonces did not match");
   }
 }
 
@@ -79,10 +79,14 @@ exports.handleAuthorizationCodeRequest = async (code, state, cookies, host) => {
     const { transcend_internal_pkce } = cookies;
     tokens = await exchangeCodeForToken(code, host, transcend_internal_pkce);
   } catch (err) {
+    console.log(
+      `ERROR with tokens = await exchangeCodeForToken(code, host, transcend_internal_pkce): ${err}`
+    );
     logger.error(err);
     return reject(`Failed to fetch token. Error: ${err}`);
   }
 
+  console.log(`Returning code 302 with JWTs in cookies`);
   logger.info(`Returning code 302 with JWTs in cookies`);
 
   // TODO: Set the cookie on the top level domain

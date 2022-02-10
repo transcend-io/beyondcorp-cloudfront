@@ -1,8 +1,8 @@
-const { logger } = require('./utils/logger');
-const { validateToken } = require('./utils/jwt');
-const { reject } = require('./utils/response');
+const { logger } = require("./utils/logger");
+const { validateToken } = require("./utils/jwt");
+const { reject } = require("./utils/response");
 
-const { handleNoAuth } = require('./handleNoAuth');
+const { handleNoAuth } = require("./handleNoAuth");
 
 /**
  * Handles the case where the user already has a cookie containing a JWT.
@@ -15,17 +15,19 @@ const { handleNoAuth } = require('./handleNoAuth');
  */
 exports.handleCookies = async (token, redirectUri, requestedUri, request) => {
   const result = await validateToken(token);
+  console.log(`Result from validateToken: ${JSON.stringify(result)}`);
 
   // If the JWT in the cookie is valid, just return the original request, which will load content from
   // the origin bucket.
-  if (result === 'success') {
-    logger.info('Valid JWT was found in cookie, passing on the request');
+  if (result === "success") {
+    console.log("Valid JWT was found in cookie, passing on the request");
+    logger.info("Valid JWT was found in cookie, passing on the request");
     return request;
   }
 
-  if (result === 'expired') {
+  if (result === "expired") {
     return handleNoAuth(redirectUri, requestedUri);
   }
 
-  return reject('Failed to validate JWT');
+  return reject("Failed to validate JWT");
 };

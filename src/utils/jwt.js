@@ -38,8 +38,10 @@ async function getPublicKeys() {
  * @returns 'success', 'invalid', or 'expired' depending on the status of the JWT
  */
 async function validateToken(token) {
+  console.log(`validateToken(token): ${token}`);
   // Fail if the token is not jwt
   const decodedJwt = decode(token, { complete: true });
+  console.log({ decodedJwt });
   if (!decodedJwt) {
     logger.error("Not a valid JWT token");
     return "invalid";
@@ -65,6 +67,7 @@ async function validateToken(token) {
   try {
     await jwtVerify(token, pem, { issuer: ISSUER, algorithms: ["RS256"] });
   } catch (err) {
+    console.log(`error with jwtVerify: ${JSON.stringify(err)}`);
     logger.warn(err);
 
     if (err.name === "TokenExpiredError") {
