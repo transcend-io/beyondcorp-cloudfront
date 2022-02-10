@@ -2,6 +2,7 @@
 const { reject } = require("./utils/response");
 const { parseCookies } = require("./utils/cookies");
 const { parseQueryString, getReferer } = require("./utils/urls");
+const util = require("util");
 
 // handlers
 const { handleAuthorizationCodeRequest } = require("./handleAuthorizationCode");
@@ -24,6 +25,9 @@ const { handleNoAuth } = require("./handleNoAuth");
  * @returns An immediate HTTP response, or the original request if CloudFront should continue
  */
 exports.handler = async (event) => {
+  console.log(
+    `event: ${util.inspect(event, { showHidden: false, depth: null })}`
+  );
   console.log("IN THE HANDLER");
   const { request } = event.Records[0].cf;
   const { headers } = request;

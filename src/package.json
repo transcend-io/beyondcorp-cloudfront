@@ -8,6 +8,7 @@
     "jsonwebtoken": "^8.5.1",
     "jwk-to-pem": "^2.0.5",
     "querystring": "^0.2.0",
-    "urlsafe-base64": "^1.0.0"
+    "urlsafe-base64": "^1.0.0",
+    "util": "^0.12.4"
   }
 }
