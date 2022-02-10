@@ -27,7 +27,7 @@ exports.handler = async (event) => {
   console.log("IN THE HANDLER");
   const { request } = event.Records[0].cf;
   const { headers } = request;
-  console.log({ headers });
+  console.log(`HEADERS: ${JSON.stringify(headers)}`);
 
   // Handle the case where the current page is referred to by the Cognito login page
   // result, and the authorization code is in the referer url.
