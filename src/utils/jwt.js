@@ -1,10 +1,10 @@
-const axios = require('axios').default;
-const jwkToPem = require('jwk-to-pem');
-const { decode, verify } = require('jsonwebtoken');
-const { promisify } = require('util');
+const axios = require("axios").default;
+const jwkToPem = require("jwk-to-pem");
+const { decode, verify } = require("jsonwebtoken");
+const { promisify } = require("util");
 
-const { ISSUER } = require('./config');
-const { logger } = require('./logger');
+const { ISSUER } = require("./config");
+const { logger } = require("./logger");
 
 const jwtVerify = promisify(verify);
 
@@ -41,16 +41,16 @@ async function validateToken(token) {
   // Fail if the token is not jwt
   const decodedJwt = decode(token, { complete: true });
   if (!decodedJwt) {
-    logger.error('Not a valid JWT token');
-    return 'invalid';
+    logger.error("Not a valid JWT token");
+    return "invalid";
   }
 
   // Fail if token is not from your UserPool
   if (decodedJwt.payload.iss !== ISSUER) {
     logger.error(
-      `JWT is not from the expected user pool. Issuer was ${decodedJwt.payload.iss}`,
+      `JWT is not from the expected user pool. Issuer was ${decodedJwt.payload.iss}`
     );
-    return 'invalid';
+    return "invalid";
   }
 
   // Get the kid from the token and retrieve corresponding PEM
@@ -58,22 +58,22 @@ async function validateToken(token) {
   const pemMap = await getPublicKeys();
   const { pem } = pemMap[kid];
   if (!pem) {
-    logger.error('Invalid id token. Could not find matching public key');
-    return 'invalid';
+    logger.error("Invalid id token. Could not find matching public key");
+    return "invalid";
   }
 
   try {
-    await jwtVerify(token, pem, { issuer: ISSUER });
+    await jwtVerify(token, pem, { issuer: ISSUER, algorithms: ["RS256"] });
   } catch (err) {
     logger.warn(err);
 
-    if (err.name === 'TokenExpiredError') {
-      return 'expired';
+    if (err.name === "TokenExpiredError") {
+      return "expired";
     }
-    return 'invalid';
+    return "invalid";
   }
 
-  return 'success';
+  return "success";
 }
 
 exports.getPublicKeys = getPublicKeys;
