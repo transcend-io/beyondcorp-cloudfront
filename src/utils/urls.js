@@ -1,4 +1,4 @@
-const { parse } = require('querystring');
+const { parse } = require("querystring");
 
 /**
  * Finds the authorization code in the querystring of the incoming url, if present.
@@ -31,6 +31,7 @@ function parseQueryString(request) {
  * @returns The referer url if present, otherwise undefined
  */
 function getReferer(headers) {
+  console.log(`IN getReferer with headers:${JSON.stringify(headers)}`);
   const { referer } = headers;
 
   if (!referer || referer.length === 0) {
@@ -40,7 +41,8 @@ function getReferer(headers) {
   const refererUrl = referer[0].value;
 
   const { searchParams } = new URL(refererUrl);
-  if (!searchParams.get('code')) {
+  console.log({ searchParams });
+  if (!searchParams.get("code")) {
     return undefined;
   }
 

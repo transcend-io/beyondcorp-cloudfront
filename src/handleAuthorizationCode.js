@@ -67,9 +67,14 @@ function validateNoncesMatch(state, cookies) {
  * @returns An immediate HTTP response to the browser, never going to the origin server
  */
 exports.handleAuthorizationCodeRequest = async (code, state, cookies, host) => {
+  console.log(
+    `IN handleAuthorizationCodeRequest: code: ${code} state: ${state}`
+  );
+  console.log(`cookies:${cookies} host:${host}`);
   try {
     validateNoncesMatch(state, cookies);
   } catch (err) {
+    console.log(`ERROR in TRY CATCH:${err}`);
     logger.error(err);
     return reject(`Failed to validate nonce params`);
   }

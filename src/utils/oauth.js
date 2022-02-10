@@ -17,8 +17,10 @@ const {
  * @param pkce - The pkce token to verify the authorization code with
  */
 async function exchangeCodeForToken(code, redirectUri, pkce) {
+  console.log(`In exchangeCodeForToken: code:${code} pkce: ${pkce}`);
   const authDomain = AUTH_DOMAIN;
   const tokenExchangeUrl = `${authDomain}/oauth2/token`;
+  console.log({ tokenExchangeUrl });
 
   const headers = {
     "Content-Type": "application/x-www-form-urlencoded",
@@ -31,6 +33,7 @@ async function exchangeCodeForToken(code, redirectUri, pkce) {
     code,
     code_verifier: pkce,
   });
+  console.log({ params });
 
   const { data } = await axios.post(tokenExchangeUrl, params, {
     headers,

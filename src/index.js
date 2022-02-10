@@ -53,6 +53,7 @@ exports.handler = async (event) => {
   // Handle the case where the current page is a redirect from the
   // Cognito login page with a query param for the authorization code set
   const parsedQueryString = parseQueryString(request);
+  console.log({ parsedQueryString });
   if (parsedQueryString) {
     const { code, state } = parsedQueryString;
     return handleAuthorizationCodeRequest(code, state, cookies, origin);
