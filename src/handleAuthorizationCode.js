@@ -74,7 +74,7 @@ exports.handleAuthorizationCodeRequest = async (code, state, cookies, host) => {
   try {
     validateNoncesMatch(state, cookies);
   } catch (err) {
-    console.log(`ERROR in TRY CATCH:${err}`);
+    console.log(`ERROR in TRY CATCH for validateNoncesMatch:${err}`);
     logger.error(err);
     return reject(`Failed to validate nonce params`);
   }
@@ -91,7 +91,7 @@ exports.handleAuthorizationCodeRequest = async (code, state, cookies, host) => {
     return reject(`Failed to fetch token. Error: ${err}`);
   }
 
-  console.log(`Returning code 302 with JWTs in cookies`);
+  console.log(`Returning code 302 with JWTs in cookies with state:${state}`);
   logger.info(`Returning code 302 with JWTs in cookies`);
 
   // TODO: Set the cookie on the top level domain

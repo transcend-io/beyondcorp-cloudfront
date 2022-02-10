@@ -46,11 +46,14 @@ async function validateToken(token) {
     logger.error("Not a valid JWT token");
     return "invalid";
   }
+  console.log(
+    `decodedJwt: ${JSON.stringify(decodedJwt)} and ISSUER is ${ISSUER}`
+  );
 
   // Fail if token is not from your UserPool
   if (decodedJwt.payload.iss !== ISSUER) {
     logger.error(
-      `JWT is not from the expected user pool. Issuer was ${decodedJwt.payload.iss}`
+      `JWT is not from the expected user pool. if(decodedJwt.payload.iss !== ISSUER) -> Issuer was decodedJwt.payload.iss: ${decodedJwt.payload.iss}`
     );
     return "invalid";
   }

@@ -1,4 +1,7 @@
 {
+  "name": "sketchy-lambda-terraform-module",
+  "version": "0.0.0",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.25.0",
     "cookie": "^0.4.2",

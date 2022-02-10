@@ -24,9 +24,10 @@ const { handleNoAuth } = require("./handleNoAuth");
  * @returns An immediate HTTP response, or the original request if CloudFront should continue
  */
 exports.handler = async (event) => {
+  console.log("IN THE HANDLER");
   const { request } = event.Records[0].cf;
   const { headers } = request;
-  console.log("IN THE HANDLER");
+  console.log({ headers });
 
   // Handle the case where the current page is referred to by the Cognito login page
   // result, and the authorization code is in the referer url.
