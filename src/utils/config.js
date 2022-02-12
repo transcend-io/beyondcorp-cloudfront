@@ -1,9 +1,9 @@
-const { SSM } = require("aws-sdk");
+// const { SSM } = require("aws-sdk");
 
 const { readFileSync } = require("fs");
 
 // All Lambda@Edge functions must reside in us-east-1.
-const ssmClient = new SSM({ region: "us-east-1" });
+// const ssmClient = new SSM({ region: "us-east-1" });
 
 // Executing this at the top level caches the config between lambda runs on the same server
 const config = JSON.parse(readFileSync("./config.json"));
@@ -14,21 +14,21 @@ const config = JSON.parse(readFileSync("./config.json"));
  * @param name - The name of the parameter to fetch
  * @returns the decrypted value of the parameter
  */
-async function fetchSsmParam(name) {
-  const { Parameter } = await ssmClient
-    .getParameter({
-      Name: name,
-      WithDecryption: true,
-    })
-    .promise();
-  return Parameter.Value;
-}
+// async function fetchSsmParam(name) {
+//   const { Parameter } = await ssmClient
+//     .getParameter({
+//       Name: name,
+//       WithDecryption: true,
+//     })
+//     .promise();
+//   return Parameter.Value;
+// }
 
-exports.fetchSsmParam = fetchSsmParam;
+// exports.fetchSsmParam = fetchSsmParam;
 exports.USERPOOL_ID = config.userpool_id;
 exports.CLIENT_ID = config.client_id;
-exports.CLIENT_SECRET_PARAM_NAME = config.client_secret_param_name;
-exports.CLIENT_SECRET = config.client_secret;
+// exports.CLIENT_SECRET_PARAM_NAME = config.client_secret_param_name;
+// exports.CLIENT_SECRET = config.client_secret;
 exports.REGION = config.userpool_region;
 exports.UI_SUBDOMAIN = config.ui_subdomain;
 exports.SCOPES = config.scopes;

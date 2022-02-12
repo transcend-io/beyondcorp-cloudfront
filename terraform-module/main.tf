@@ -24,14 +24,14 @@ module "lambda-at-edge" {
   plaintext_params = {
     userpool_id              = var.userpool_id
     client_id                = var.client_id
-    client_secret            = var.client_secret
+    # client_secret            = var.client_secret
     userpool_region          = var.userpool_region
     ui_subdomain             = var.ui_subdomain
     scopes                   = join(" ", var.scopes)
-    client_secret_param_name = var.ssm_client_secret_param_name
+    # client_secret_param_name = var.ssm_client_secret_param_name
   }
 
-  ssm_params = {
-    (var.ssm_client_secret_param_name) = var.client_secret
-  }
+  # ssm_params = {
+  #   (var.ssm_client_secret_param_name) = var.client_secret
+  # }
 }

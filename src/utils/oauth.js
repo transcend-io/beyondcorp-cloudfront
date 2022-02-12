@@ -4,9 +4,9 @@ const { stringify } = require("querystring");
 const {
   AUTH_DOMAIN,
   CLIENT_ID,
-  CLIENT_SECRET,
-  CLIENT_SECRET_PARAM_NAME,
-  fetchSsmParam,
+  // CLIENT_SECRET,
+  // CLIENT_SECRET_PARAM_NAME,
+  // fetchSsmParam,
 } = require("./config");
 
 /**
@@ -37,11 +37,11 @@ async function exchangeCodeForToken(code, redirectUri, pkce) {
 
   const { data } = await axios.post(tokenExchangeUrl, params, {
     headers,
-    auth: {
-      username: CLIENT_ID,
-      password: CLIENT_SECRET,
-      // password: await fetchSsmParam(CLIENT_SECRET_PARAM_NAME)
-    },
+    // auth: {
+    //   username: CLIENT_ID,
+    //   password: CLIENT_SECRET,
+    //   // password: await fetchSsmParam(CLIENT_SECRET_PARAM_NAME)
+    // },
   });
 
   if (!data) {
