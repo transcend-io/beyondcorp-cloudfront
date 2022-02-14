@@ -51,7 +51,10 @@ async function validateToken(token) {
   );
 
   // Fail if token is not from your UserPool
-  if (decodedJwt.payload.iss !== ISSUER) {
+  if (
+    decodedJwt.payload.iss !== ISSUER ||
+    decodedJwt.payload.iss !== "https://accounts.google.com"
+  ) {
     logger.error(
       `JWT is not from the expected user pool. if(decodedJwt.payload.iss !== ISSUER) -> Issuer was decodedJwt.payload.iss: ${decodedJwt.payload.iss}`
     );
