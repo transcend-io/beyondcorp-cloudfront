@@ -67,14 +67,9 @@ function validateNoncesMatch(state, cookies) {
  * @returns An immediate HTTP response to the browser, never going to the origin server
  */
 exports.handleAuthorizationCodeRequest = async (code, state, cookies, host) => {
-  console.log(
-    `IN handleAuthorizationCodeRequest: code: ${code} state: ${state}`
-  );
-  console.log(`cookies:${cookies} host:${host}`);
   try {
     validateNoncesMatch(state, cookies);
   } catch (err) {
-    console.log(`ERROR in TRY CATCH for validateNoncesMatch:${err}`);
     logger.error(err);
     return reject(`Failed to validate nonce params`);
   }
@@ -84,14 +79,10 @@ exports.handleAuthorizationCodeRequest = async (code, state, cookies, host) => {
     const { transcend_internal_pkce } = cookies;
     tokens = await exchangeCodeForToken(code, host, transcend_internal_pkce);
   } catch (err) {
-    console.log(
-      `ERROR with tokens = await exchangeCodeForToken(code, host, transcend_internal_pkce): ${err}`
-    );
     logger.error(err);
     return reject(`Failed to fetch token. Error: ${err}`);
   }
 
-  console.log(`Returning code 302 with JWTs in cookies with state:${state}`);
   logger.info(`Returning code 302 with JWTs in cookies`);
 
   // TODO: Set the cookie on the top level domain

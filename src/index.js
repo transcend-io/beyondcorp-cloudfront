@@ -25,13 +25,13 @@ const { handleNoAuth } = require("./handleNoAuth");
  * @returns An immediate HTTP response, or the original request if CloudFront should continue
  */
 exports.handler = async (event) => {
-  console.log(
-    `event: ${util.inspect(event, { showHidden: false, depth: null })}`
-  );
-  console.log("IN THE HANDLER");
+  // This should only be uncommented in deep debugging scenarios as the event can be used in the Lambda playground to test
+  // console.log(
+  //   `event: ${util.inspect(event, { showHidden: false, depth: null })}`
+  // );
+
   const { request } = event.Records[0].cf;
   const { headers } = request;
-  console.log(`HEADERS: ${JSON.stringify(headers)}`);
 
   // Handle the case where the current page is referred to by the Cognito login page
   // result, and the authorization code is in the referer url.
@@ -47,18 +47,15 @@ exports.handler = async (event) => {
 
   // Parse the final destination the user wants to go to
   const origin = `https://${headers.host[0].value}`;
-  console.log({ origin });
   const querystring = request.querystring ? `?${request.querystring}` : "";
   const finalDestinationUri = `${origin}${request.uri}${querystring}`;
-  console.log({ querystring, finalDestinationUri });
 
   const cookies = parseCookies(headers);
-  console.log({ cookies });
 
   // Handle the case where the current page is a redirect from the
   // Cognito login page with a query param for the authorization code set
   const parsedQueryString = parseQueryString(request);
-  console.log({ parsedQueryString });
+
   if (parsedQueryString) {
     const { code, state } = parsedQueryString;
     return handleAuthorizationCodeRequest(code, state, cookies, origin);
@@ -66,9 +63,6 @@ exports.handler = async (event) => {
 
   // Handle the case where a cookie is set for the JWT
   if (cookies && cookies.transcend_internal_id_token) {
-    console.log(
-      `Handling cookies with cookies.transcend_internal_id_token:${cookies.transcend_internal_id_token}`
-    );
     return handleCookies(
       cookies.transcend_internal_id_token,
       origin,
