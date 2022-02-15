@@ -31,7 +31,6 @@ function parseQueryString(request) {
  * @returns The referer url if present, otherwise undefined
  */
 function getReferer(headers) {
-  console.log(`IN getReferer with headers:${JSON.stringify(headers)}`);
   const { referer } = headers;
 
   if (!referer || referer.length === 0) {
@@ -41,7 +40,7 @@ function getReferer(headers) {
   const refererUrl = referer[0].value;
 
   const { searchParams } = new URL(refererUrl);
-  console.log({ searchParams });
+
   if (!searchParams.get("code")) {
     return undefined;
   }
