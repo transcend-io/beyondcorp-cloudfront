@@ -42,6 +42,7 @@ function getReferer(headers) {
   const { searchParams } = new URL(refererUrl);
 
   if (!searchParams.get("code")) {
+    console.log("code does not exist in searchParams, returning undefined");
     return undefined;
   }
 
