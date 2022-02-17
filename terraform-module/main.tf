@@ -11,7 +11,7 @@ module "lambda-at-edge" {
 
   runtime = "nodejs14.x"
 
-  lambda_code_source_dir = "${path.module}/../src"
+  lambda_code_source_dir = "${path.module}/./src"
   file_globs = [
     "index.js",
     "handle*.js",
@@ -22,12 +22,12 @@ module "lambda-at-edge" {
   ]
 
   plaintext_params = {
-    userpool_id              = var.userpool_id
-    client_id                = var.client_id
+    userpool_id = var.userpool_id
+    client_id   = var.client_id
     # client_secret            = var.client_secret
-    userpool_region          = var.userpool_region
-    ui_subdomain             = var.ui_subdomain
-    scopes                   = join(" ", var.scopes)
+    userpool_region = var.userpool_region
+    ui_subdomain    = var.ui_subdomain
+    scopes          = join(" ", var.scopes)
     # client_secret_param_name = var.ssm_client_secret_param_name
   }
 
