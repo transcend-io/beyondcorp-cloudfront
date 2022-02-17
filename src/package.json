@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.25.0",
+    "axios": "^0.26.0",
     "cookie": "^0.4.2",
     "jsonwebtoken": "^8.5.1",
     "jwk-to-pem": "^2.0.5",
