@@ -11,7 +11,7 @@ module "lambda-at-edge" {
 
   runtime = "nodejs14.x"
 
-  lambda_code_source_dir = "${path.module}/./src"
+  lambda_code_source_dir = "${path.module}/../src"
   file_globs = [
     "index.js",
     "handle*.js",
