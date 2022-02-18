@@ -7,7 +7,7 @@ module "lambda-at-edge" {
   name        = var.name
   description = var.description
 
-  # s3_artifact_bucket = var.s3_artifact_bucket
+  s3_artifact_bucket = var.s3_artifact_bucket
 
   runtime = "nodejs14.x"
 
