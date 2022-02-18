@@ -39,4 +39,4 @@ variable "scopes" {
 #   default = "COGNITO_CLIENT_SECRET"
 # }
 
-# variable "s3_artifact_bucket" {}
+variable "s3_artifact_bucket" {}
