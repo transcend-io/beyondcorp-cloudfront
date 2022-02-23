@@ -8,9 +8,9 @@ const util = require("util");
 const { handleAuthorizationCodeRequest } = require("./handleAuthorizationCode");
 const { handleCookies } = require("./handleRequestWithCookies");
 const { handleNoAuth } = require("./handleNoAuth");
-// const ImageRegex = new RegExp(
-//   "^https?://(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|gif|png|svg|ico|woff|woff2)$"
-// );
+const ImageRegex = new RegExp(
+  "^.*(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|jpeg|gif|png|svg|woff|woff2|ico)?.*$"
+);
 
 /**
  * Main function that runs on Viewer-Request CloudFront events.
@@ -29,9 +29,9 @@ const { handleNoAuth } = require("./handleNoAuth");
  */
 exports.handler = async (event) => {
   // This should only be uncommented in deep debugging scenarios as the event can be used in the Lambda playground to test
-  // console.log(
-  //   `event: ${util.inspect(event, { showHidden: false, depth: null })}`
-  // );
+  console.log(
+    `event: ${util.inspect(event, { showHidden: false, depth: null })}`
+  );
 
   const { request } = event.Records[0].cf;
   const { headers } = request;
@@ -56,12 +56,12 @@ exports.handler = async (event) => {
     `################## Origin: ${origin} finalDestinationUri: ${finalDestinationUri} referer: ${referer} ##############################`
   );
 
-  // if (ImageRegex.test(finalDestinationUri)) {
-  //   console.log(
-  //     `################## Matched REGEX for finalDestinationUri: ${finalDestinationUri} ##############################`
-  //   );
-  //   // return request;
-  // }
+  if (ImageRegex.test(finalDestinationUri)) {
+    console.log(
+      `################## Matched REGEX for finalDestinationUri: ${finalDestinationUri} ##############################`
+    );
+    return request;
+  }
 
   const cookies = parseCookies(headers);
 
