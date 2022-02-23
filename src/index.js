@@ -53,11 +53,14 @@ exports.handler = async (event) => {
   const querystring = request.querystring ? `?${request.querystring}` : "";
   const finalDestinationUri = `${origin}${request.uri}${querystring}`;
   console.log(
-    `################## finalDestinationUri: ${finalDestinationUri} referer: ${referer} ##############################`
+    `################## Origin: ${origin} finalDestinationUri: ${finalDestinationUri} referer: ${referer} ##############################`
   );
 
   if (ImageRegex.test(finalDestinationUri)) {
-    return request;
+    console.log(
+      `################## Matched REGEX for finalDestinationUri: ${finalDestinationUri} ##############################`
+    );
+    // return request;
   }
 
   const cookies = parseCookies(headers);
