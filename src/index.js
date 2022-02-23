@@ -8,8 +8,12 @@ const util = require("util");
 const { handleAuthorizationCodeRequest } = require("./handleAuthorizationCode");
 const { handleCookies } = require("./handleRequestWithCookies");
 const { handleNoAuth } = require("./handleNoAuth");
+// const ImageRegex = new RegExp(
+//   "^.*(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|jpeg|gif|png|svg|ttf|woff|woff2|ico)?.*$"
+// );
 const ImageRegex = new RegExp(
-  "^.*(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|jpeg|gif|png|svg|woff|woff2|ico)?.*$"
+  "(https?://.*.(?:jpg|jpeg|gif|png|svg|ttf|woff|woff2|ico))",
+  "gi"
 );
 
 /**
@@ -56,11 +60,16 @@ exports.handler = async (event) => {
     `################## Origin: ${origin} finalDestinationUri: ${finalDestinationUri} referer: ${referer} ##############################`
   );
 
-  if (ImageRegex.test(finalDestinationUri)) {
-    console.log(
-      `################## Matched REGEX for finalDestinationUri: ${finalDestinationUri} ##############################`
-    );
-    return request;
+  try {
+    if (ImageRegex.test(finalDestinationUri)) {
+      console.log(
+        `################## Matched REGEX for finalDestinationUri: ${finalDestinationUri} ##############################`
+      );
+      return request;
+    }
+  } catch (e) {
+    console.error({ e });
+    console.log(`ERROR:${e}`);
   }
 
   const cookies = parseCookies(headers);
