@@ -8,6 +8,9 @@ const util = require("util");
 const { handleAuthorizationCodeRequest } = require("./handleAuthorizationCode");
 const { handleCookies } = require("./handleRequestWithCookies");
 const { handleNoAuth } = require("./handleNoAuth");
+const ImageRegex = new RegExp(
+  "^https?://(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|gif|png)$"
+);
 
 /**
  * Main function that runs on Viewer-Request CloudFront events.
@@ -49,6 +52,13 @@ exports.handler = async (event) => {
   const origin = `https://${headers.host[0].value}`;
   const querystring = request.querystring ? `?${request.querystring}` : "";
   const finalDestinationUri = `${origin}${request.uri}${querystring}`;
+  console.log(
+    `################## finalDestinationUri: ${finalDestinationUri} referer: ${referer} ##############################`
+  );
+
+  if (ImageRegex.test(finalDestinationUri)) {
+    return request;
+  }
 
   const cookies = parseCookies(headers);
 
