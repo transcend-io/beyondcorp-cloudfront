@@ -8,13 +8,12 @@ const util = require("util");
 const { handleAuthorizationCodeRequest } = require("./handleAuthorizationCode");
 const { handleCookies } = require("./handleRequestWithCookies");
 const { handleNoAuth } = require("./handleNoAuth");
+const ImageRegex =
+  /(https:\/\/)([^\s(["<,>/]*)(\/)[^\s[",><]*(.png|.jpg|.jpeg|.gif|.png|.svg|.ttf|.woff|.woff2|.ico)(\?[^\s[",><]*)?/i;
 // const ImageRegex = new RegExp(
-//   "^.*(?:[a-z0-9-]+.)+[a-z]{2,6}(?:/[^/#?]+)+.(?:jpg|jpeg|gif|png|svg|ttf|woff|woff2|ico)?.*$"
+//   "(https?://.*.(?:jpg|jpeg|gif|png|svg|ttf|woff|woff2|ico))",
+//   "gi"
 // );
-const ImageRegex = new RegExp(
-  "(https?://.*.(?:jpg|jpeg|gif|png|svg|ttf|woff|woff2|ico))",
-  "gi"
-);
 
 /**
  * Main function that runs on Viewer-Request CloudFront events.
@@ -57,7 +56,7 @@ exports.handler = async (event) => {
   const querystring = request.querystring ? `?${request.querystring}` : "";
   const finalDestinationUri = `${origin}${request.uri}${querystring}`;
   console.log(
-    `################## Origin: ${origin} finalDestinationUri: ${finalDestinationUri} referer: ${referer} ##############################`
+    `################## Origin: ${origin} finalDestinationUri: ->${finalDestinationUri}<- referer: ${referer} ##############################`
   );
 
   try {
@@ -66,6 +65,8 @@ exports.handler = async (event) => {
         `################## Matched REGEX for finalDestinationUri: ${finalDestinationUri} ##############################`
       );
       return request;
+    } else {
+      console.log(`##### DID NOT MATCH REGEX ######`);
     }
   } catch (e) {
     console.error({ e });
