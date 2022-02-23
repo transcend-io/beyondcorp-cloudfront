@@ -32,9 +32,9 @@ const ImageRegex =
  */
 exports.handler = async (event) => {
   // This should only be uncommented in deep debugging scenarios as the event can be used in the Lambda playground to test
-  console.log(
-    `event: ${util.inspect(event, { showHidden: false, depth: null })}`
-  );
+  // console.log(
+  //   `event: ${util.inspect(event, { showHidden: false, depth: null })}`
+  // );
 
   const { request } = event.Records[0].cf;
   const { headers } = request;
@@ -62,11 +62,13 @@ exports.handler = async (event) => {
   try {
     if (ImageRegex.test(finalDestinationUri)) {
       console.log(
-        `################## Matched REGEX for finalDestinationUri: ${finalDestinationUri} ##############################`
+        `################## Matched IMAGE REGEX for finalDestinationUri: ${finalDestinationUri} ##############################`
       );
       return request;
     } else {
-      console.log(`##### DID NOT MATCH REGEX ######`);
+      console.log(
+        `##### DID NOT MATCH IMAGE REGEX for finalDestinationUri: ${finalDestinationUri} ######`
+      );
     }
   } catch (e) {
     console.error({ e });
