@@ -59,21 +59,21 @@ exports.handler = async (event) => {
     `################## Origin: ${origin} finalDestinationUri: ->${finalDestinationUri}<- referer: ${referer} ##############################`
   );
 
-  try {
-    if (ImageRegex.test(finalDestinationUri)) {
-      console.log(
-        `################## Matched IMAGE REGEX for finalDestinationUri: ${finalDestinationUri} ##############################`
-      );
-      return request;
-    } else {
-      console.log(
-        `##### DID NOT MATCH IMAGE REGEX for finalDestinationUri: ${finalDestinationUri} ######`
-      );
-    }
-  } catch (e) {
-    console.error({ e });
-    console.log(`ERROR:${e}`);
-  }
+  // try {
+  //   if (ImageRegex.test(finalDestinationUri)) {
+  //     console.log(
+  //       `################## Matched IMAGE REGEX for finalDestinationUri: ${finalDestinationUri} ##############################`
+  //     );
+  //     return request;
+  //   } else {
+  //     console.log(
+  //       `##### DID NOT MATCH IMAGE REGEX for finalDestinationUri: ${finalDestinationUri} ######`
+  //     );
+  //   }
+  // } catch (e) {
+  //   console.error({ e });
+  //   console.log(`ERROR:${e}`);
+  // }
 
   const cookies = parseCookies(headers);
 
