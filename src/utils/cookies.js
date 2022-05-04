@@ -9,13 +9,13 @@ const { parse } = require('cookie');
  * Set `HttpOnly` on the nonce so that the client cannot access it for XSS protection
  */
 const COOKIE_SETTINGS = {
-  transcend_internal_id_token: 'Path=/; Max-Age=3600; Secure;',
-  transcend_internal_access_token: 'Path=/; Max-Age=3600; Secure;',
-  transcend_internal_refresh_token: 'Path=/; Max-Age=3600; Secure;',
-  transcend_internal_scopes: 'Path=/; Max-Age=3600; Secure;',
+  transcend_internal_id_token: 'Path=/; Max-Age=604800; Secure;',
+  transcend_internal_access_token: 'Path=/; Max-Age=604800; Secure;',
+  transcend_internal_refresh_token: 'Path=/; Max-Age=604800; Secure;',
+  transcend_internal_scopes: 'Path=/; Max-Age=604800; Secure;',
 
-  transcend_internal_nonce: 'Path=/; Max-Age=3600; Secure; HttpOnly;',
-  transcend_internal_pkce: 'Path=/; Max-Age=3600; Secure;',
+  transcend_internal_nonce: 'Path=/; Max-Age=604800; Secure; HttpOnly;',
+  transcend_internal_pkce: 'Path=/; Max-Age=604800; Secure;',
 };
 const COOKIE_NAMES = Object.keys(COOKIE_SETTINGS);
 
