@@ -7,9 +7,16 @@ const { parse } = require("querystring");
  * @returns the authorization code from the url, or undefined if not present
  */
 function parseQueryString(request) {
-  const { querystring } = request;
+  const { querystring, refererUrl } = request;
+  console.log({querystring, refererUrl});
 
   if (!querystring) {
+    return undefined;
+  }
+
+  const openAthensRegex = /open-athens-redirect\?code=/g;
+  if(openAthensRegex.test(refererUrl)){
+    console.log(`code is being passed for openathens and not cognito: querystring:${refererUrl}`);
     return undefined;
   }
 
@@ -41,6 +48,11 @@ function getReferer(headers) {
 
   const { searchParams } = new URL(refererUrl);
 
+  const openAthensRegex = /open-athens-redirect\?code=/g;
+  if(openAthensRegex.test(refererUrl)){
+    console.log(`code is being passed for openathens and not cognito: ${refererUrl}`);
+    return undefined;
+  }
   if (!searchParams.get("code")) {
     console.log("code does not exist in searchParams, returning undefined");
     return undefined;
