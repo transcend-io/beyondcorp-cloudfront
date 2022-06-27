@@ -6,9 +6,9 @@ const { parse } = require("querystring");
  * @param request - The incoming HTTP request
  * @returns the authorization code from the url, or undefined if not present
  */
-function parseQueryString(request) {
+function parseQueryString(request, finalDestinationUri) {
   const { querystring, refererUrl } = request;
-  console.log({querystring, refererUrl});
+  console.log(`In parseQueryString querystring:${querystring} refererUrl:${refererUrl} finalDestinationUri:${finalDestinationUri}`);
 
   if (!querystring) {
     return undefined;
@@ -17,6 +17,12 @@ function parseQueryString(request) {
   const openAthensRegex = /open-athens-redirect\?code=/g;
   if(openAthensRegex.test(refererUrl)){
     console.log(`code is being passed for openathens and not cognito: querystring:${refererUrl}`);
+    return undefined;
+  }
+
+  const faviconsRegex = /.*\/favicons\/favicon.*png/g;
+  if(faviconsRegex.test(finalDestinationUri)){
+    console.log(`matched manifest.webmanifest request for favicons:finalDestinationUri:${finalDestinationUri} allow through`);
     return undefined;
   }
 

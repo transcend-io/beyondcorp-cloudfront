@@ -19,7 +19,7 @@ const { stringify } = require('querystring');
  * @returns a 302 HTTP response redirecting to the login page
  */
 exports.handleNoAuth = async (redirectUri, requestedUri) => {
-  logger.info(`Returning code 302 to login page`);
+  logger.info(`Returning code 302 to login page for redirectUri:${redirectUri} and requestedUri:${requestedUri}`);
 
   // Protects against XSS, CSRF attacks, and Authorization Code theft
   const nonce = generateNonce();

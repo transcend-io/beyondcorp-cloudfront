@@ -26,6 +26,7 @@ const COOKIE_NAMES = Object.keys(COOKIE_SETTINGS);
  * @returns a map of cookie names to values
  */
 function parseCookies(headers) {
+  console.log(`in parseCookies`);
   const { cookie } = headers;
   if (!cookie) {
     return {};

@@ -79,7 +79,7 @@ exports.handler = async (event) => {
 
   // Handle the case where the current page is a redirect from the
   // Cognito login page with a query param for the authorization code set
-  const parsedQueryString = parseQueryString(request);
+  const parsedQueryString = parseQueryString(request, finalDestinationUri);
 
   if (parsedQueryString) {
     const { code, state } = parsedQueryString;
@@ -95,6 +95,14 @@ exports.handler = async (event) => {
       request
     );
   }
+
+  // This is for the manifest.webmanifest requests
+  const faviconsRegex = /.*\/favicons\/favicon.*png$/g;
+  if(faviconsRegex.test(finalDestinationUri)){
+    console.log(`matched manifest.webmanifest request for favicons:finalDestinationUri:${finalDestinationUri} allow through`);
+    return request;
+  }
+  console.log(`returning handleNoAuth for origin:${origin} and finalDestinationUri:${finalDestinationUri}`);
 
   // Handle the case where none of the above are true, meaning there is
   // no authorization info present. In this case, we redirect to the login page.
