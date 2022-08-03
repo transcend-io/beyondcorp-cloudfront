@@ -28,7 +28,7 @@ exports.handleNoAuth = async (redirectUri, requestedUri) => {
   const queryParams = stringify({
     client_id: CLIENT_ID,
     scopes: SCOPES,
-    redirect_uri: redirectUri,
+    redirect_uri: redirectUri + '/handleCode.html',
     response_type: 'code',
     state: encode(
       Buffer.from(JSON.stringify({ nonce, requestedUri })).toString('base64'),
