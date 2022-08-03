@@ -27,7 +27,7 @@ async function exchangeCodeForToken(code, redirectUri, pkce) {
   const params = stringify({
     grant_type: "authorization_code",
     client_id: CLIENT_ID,
-    redirect_uri: redirectUri,
+    redirect_uri: redirectUri + '/handleCode',
     code,
     code_verifier: pkce,
   });
